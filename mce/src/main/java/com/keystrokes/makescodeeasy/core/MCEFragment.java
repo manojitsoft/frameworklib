@@ -1,4 +1,4 @@
-package com.keystrokes.makescodeeasy.com.bykerr.core;
+package com.keystrokes.makescodeeasy.core;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDialogFragment;
@@ -6,13 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.transhelp.bykerr.framework.interfaces.IBykerrApi;
+import com.keystrokes.makescodeeasy.interfaces.IMCEApi;
+
 
 /**
  * Created by mmathiarasan on 11-04-2018.
  */
 
-public abstract class MCEFragment extends AppCompatDialogFragment implements IBykerrApi {
+public abstract class MCEFragment extends AppCompatDialogFragment implements IMCEApi {
 
     protected abstract int getLayoutRes();
     protected abstract View initUI(View view);
@@ -33,7 +34,7 @@ public abstract class MCEFragment extends AppCompatDialogFragment implements IBy
 
     @Override
     public <T> T getApi(Class<T> clazz) {
-        BykerrActivity activity = (BykerrActivity) getActivity();
+        MCEActivity activity = (MCEActivity) getActivity();
         return activity.getApi(clazz);
     }
 }

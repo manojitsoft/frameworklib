@@ -1,4 +1,4 @@
-package com.keystrokes.makescodeeasy.com.bykerr.prefs;
+package com.keystrokes.makescodeeasy.prefs;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -11,7 +11,7 @@ public class MCEPrefs {
 
     private static final String SHARED_PREF_NAME = "bykerr";
     private static Context mCtx;
-    private static com.keystrokes.makescodeeasy.com.bykerr.prefs.MCEPrefs INSTANCE;
+    private static MCEPrefs INSTANCE;
     private SharedPreferences prefs;
 
     private MCEPrefs(Context context){
@@ -19,9 +19,9 @@ public class MCEPrefs {
         prefs = this.mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
     }
 
-    public static com.keystrokes.makescodeeasy.com.bykerr.prefs.MCEPrefs getInstance(Context context){
+    public static MCEPrefs getInstance(Context context){
         if (INSTANCE == null)
-            INSTANCE = new com.keystrokes.makescodeeasy.com.bykerr.prefs.MCEPrefs(context);
+            INSTANCE = new MCEPrefs(context);
         return INSTANCE;
     }
 

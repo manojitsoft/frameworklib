@@ -1,11 +1,10 @@
-package com.keystrokes.makescodeeasy.com.bykerr.core;
+package com.keystrokes.makescodeeasy.core;
 
 import android.app.Application;
 
 import com.crashlytics.android.Crashlytics;
-
-import org.transhelp.bykerr.framework.api.base.BykerrApiClient;
-import org.transhelp.bykerr.framework.api.utils.IBykerrBaseApi;
+import com.keystrokes.makescodeeasy.api.base.MCEApiClient;
+import com.keystrokes.makescodeeasy.api.utils.IMCEBaseApi;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -25,7 +24,7 @@ public class MCEApp extends Application {
         Fabric.with(this, new Crashlytics());
     }
 
-    public <T extends IBykerrBaseApi> T getBykerrApi(Class<T> clazz) {
-        return BykerrApiClient.newInstance(getApplicationContext()).createBykerrService(clazz);
+    public <T extends IMCEBaseApi> T getMCEApi(Class<T> clazz) {
+        return MCEApiClient.newInstance(getApplicationContext()).createService(clazz);
     }
 }

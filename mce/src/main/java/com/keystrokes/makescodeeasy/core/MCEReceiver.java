@@ -1,10 +1,10 @@
-package com.keystrokes.makescodeeasy.com.bykerr.core;
+package com.keystrokes.makescodeeasy.core;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import org.transhelp.bykerr.framework.models.IBykerrReceiverModel;
+import com.keystrokes.makescodeeasy.models.IMCEReceiverModel;
 
 /**
  * Created by mmathiarasan on 17-04-2018.
@@ -24,6 +24,6 @@ public abstract class MCEReceiver extends BroadcastReceiver {
     protected abstract String actionOnReceive(Intent intent);
 
     public interface IBykkerReceiver {
-        public void onReceive(Intent intent, IBykerrReceiverModel data);
+        public void onReceive(Intent intent, IMCEReceiverModel data);
     }
 }

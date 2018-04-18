@@ -1,7 +1,6 @@
-package com.keystrokes.makescodeeasy.com.bykerr.interfaces;
+package com.keystrokes.makescodeeasy.interfaces;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by mmathiarasan on 17-04-2018.

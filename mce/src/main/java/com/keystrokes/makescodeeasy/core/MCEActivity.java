@@ -1,7 +1,6 @@
-package com.keystrokes.makescodeeasy.com.bykerr.core;
+package com.keystrokes.makescodeeasy.core;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.Menu;
@@ -11,8 +10,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 
-import org.transhelp.bykerr.framework.api.utils.IBykerrBaseApi;
-import org.transhelp.bykerr.framework.interfaces.IBykerrApi;
+
+import com.keystrokes.makescodeeasy.api.utils.IMCEBaseApi;
+import com.keystrokes.makescodeeasy.interfaces.IMCEApi;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +21,7 @@ import java.util.Map;
  * Created by mmathiarasan on 11-04-2018.
  */
 
-public abstract class MCEActivity extends AppCompatActivity implements IBykerrApi {
+public abstract class MCEActivity extends AppCompatActivity implements IMCEApi {
 
     protected abstract int getLayoutRes();
 
@@ -40,7 +40,7 @@ public abstract class MCEActivity extends AppCompatActivity implements IBykerrAp
     private ProgressBar progressBar;
     private  View view;
 
-    private Map<Class<?>, IBykerrBaseApi> API_MAP = new HashMap<>();
+    private Map<Class<?>, IMCEBaseApi> API_MAP = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,11 +104,11 @@ public abstract class MCEActivity extends AppCompatActivity implements IBykerrAp
     }
 
     public void loadApiMap() {
-        BykerrApp app = (BykerrApp) getApplication();
+        MCEApp app = (MCEApp) getApplication();
         if (loadApiClasses() != null &&
                 loadApiClasses().size() > 0) {
             for (int i = 0; i < loadApiClasses().size(); i++) {
-                API_MAP.put(loadApiClasses().get(i), app.getBykerrApi(loadApiClasses().get(i)));
+                API_MAP.put(loadApiClasses().get(i), app.getMCEApi(loadApiClasses().get(i)));
             }
         }
     }
