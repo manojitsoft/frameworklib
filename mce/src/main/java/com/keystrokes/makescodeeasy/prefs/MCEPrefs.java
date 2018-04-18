@@ -9,19 +9,18 @@ import android.content.SharedPreferences;
 
 public class MCEPrefs {
 
-    private static final String SHARED_PREF_NAME = "bykerr";
     private static Context mCtx;
     private static MCEPrefs INSTANCE;
     private SharedPreferences prefs;
 
-    private MCEPrefs(Context context){
+    private MCEPrefs(Context context, String name){
         this.mCtx = context;
-        prefs = this.mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        prefs = this.mCtx.getSharedPreferences(name, Context.MODE_PRIVATE);
     }
 
-    public static MCEPrefs getInstance(Context context){
+    public static MCEPrefs getInstance(Context context, String name){
         if (INSTANCE == null)
-            INSTANCE = new MCEPrefs(context);
+            INSTANCE = new MCEPrefs(context, name);
         return INSTANCE;
     }
 

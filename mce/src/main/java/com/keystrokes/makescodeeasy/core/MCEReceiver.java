@@ -22,8 +22,4 @@ public abstract class MCEReceiver extends BroadcastReceiver {
     protected abstract String action();
 
     protected abstract String actionOnReceive(Intent intent);
-
-    public interface IBykkerReceiver {
-        public void onReceive(Intent intent, IMCEReceiverModel data);
-    }
 }
