@@ -1,6 +1,7 @@
 package com.keystrokes.makescodeeasy.core;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.Menu;
