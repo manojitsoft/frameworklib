@@ -12,8 +12,9 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 
 
-import com.keystrokes.makescodeeasy.api.utils.IMCEBaseApi;
-import com.keystrokes.makescodeeasy.interfaces.IMCEApi;
+import com.keystrokes.makescodeeasy.api.utils.IMCERetrofitBaseApi;
+import com.keystrokes.makescodeeasy.interfaces.IMCERetrofitApiUtil;
+import com.keystrokes.makescodeeasy.prefs.MCEPrefs;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +23,7 @@ import java.util.Map;
  * Created by mmathiarasan on 11-04-2018.
  */
 
-public abstract class MCEActivity extends AppCompatActivity implements IMCEApi {
+public abstract class MCEActivity extends AppCompatActivity implements IMCERetrofitApiUtil {
 
     protected abstract int getLayoutRes();
 
@@ -41,7 +42,7 @@ public abstract class MCEActivity extends AppCompatActivity implements IMCEApi {
     private ProgressBar progressBar;
     private  View view;
 
-    private Map<Class<?>, IMCEBaseApi> API_MAP = new HashMap<>();
+    private Map<Class<?>, IMCERetrofitBaseApi> API_MAP = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,10 +73,12 @@ public abstract class MCEActivity extends AppCompatActivity implements IMCEApi {
         return super.onCreateOptionsMenu(menu);
     }
 
-    public void showProgress(String content) {
-        progressBar.setContentDescription(content);
+    public void showProgress() {
+        progressBar.setContentDescription(loadingMessage());
         progressBar.setVisibility(View.VISIBLE);
     }
+
+    public abstract String loadingMessage();
 
     public void hideProgress() {
         progressBar.setVisibility(View.GONE);
@@ -109,7 +112,7 @@ public abstract class MCEActivity extends AppCompatActivity implements IMCEApi {
         if (loadApiClasses() != null &&
                 loadApiClasses().size() > 0) {
             for (int i = 0; i < loadApiClasses().size(); i++) {
-                API_MAP.put(loadApiClasses().get(i), app.getMCEApi(loadApiClasses().get(i)));
+                API_MAP.put(loadApiClasses().get(i), app.getMCERetrofitApi(loadApiClasses().get(i)));
             }
         }
     }
@@ -121,5 +124,9 @@ public abstract class MCEActivity extends AppCompatActivity implements IMCEApi {
             return (T) API_MAP.get(clazz);
         }
         return null;
+    }
+
+    public MCEPrefs getPrefsHelper() {
+        return ((MCEApp) getApplication()).getPrefsHelper();
     }
 }

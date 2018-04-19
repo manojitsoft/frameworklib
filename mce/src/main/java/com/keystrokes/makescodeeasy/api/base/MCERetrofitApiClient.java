@@ -3,7 +3,7 @@ package com.keystrokes.makescodeeasy.api.base;
 import android.content.Context;
 
 
-import com.keystrokes.makescodeeasy.api.utils.IMCEBaseApi;
+import com.keystrokes.makescodeeasy.api.utils.IMCERetrofitBaseApi;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -12,15 +12,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by mmathiarasan on 16-04-2018.
  */
 
-public class MCEApiClient {
+public class MCERetrofitApiClient {
 
-    private static MCEApiClient INSTANCE = null;
+    private static MCERetrofitApiClient INSTANCE = null;
 
     private static Retrofit retrofit = null;
 
     private Context mCtx;
 
-    private MCEApiClient(Context ctx, int urlResourceId) {
+    private MCERetrofitApiClient(Context ctx, int urlResourceId) {
         this.mCtx = ctx;
         this.retrofit = new Retrofit.Builder()
                 .baseUrl(this.mCtx.getResources().getString(urlResourceId))
@@ -28,14 +28,14 @@ public class MCEApiClient {
                 .build();
     }
 
-    public static MCEApiClient newInstance(Context ctx, int urlResourceId) {
+    public static MCERetrofitApiClient newInstance(Context ctx, int urlResourceId) {
         if ( null == INSTANCE ) {
-            INSTANCE = new MCEApiClient(ctx, urlResourceId);
+            INSTANCE = new MCERetrofitApiClient(ctx, urlResourceId);
         }
         return INSTANCE;
     }
 
-    public <T extends IMCEBaseApi> T createService(Class<T> clazz) {
+    public <T extends IMCERetrofitBaseApi> T createService(Class<T> clazz) {
         return this.retrofit.create(clazz);
     }
 }

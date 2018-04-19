@@ -6,14 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.keystrokes.makescodeeasy.interfaces.IMCEApi;
+import com.keystrokes.makescodeeasy.interfaces.IMCERetrofitApiUtil;
+import com.keystrokes.makescodeeasy.prefs.MCEPrefs;
 
 
 /**
  * Created by mmathiarasan on 11-04-2018.
  */
 
-public abstract class MCEFragment extends AppCompatDialogFragment implements IMCEApi {
+public abstract class MCEFragment extends AppCompatDialogFragment implements IMCERetrofitApiUtil {
 
     protected abstract int getLayoutRes();
     protected abstract View initUI(View view);
@@ -36,5 +37,9 @@ public abstract class MCEFragment extends AppCompatDialogFragment implements IMC
     public <T> T getApi(Class<T> clazz) {
         MCEActivity activity = (MCEActivity) getActivity();
         return activity.getApi(clazz);
+    }
+
+    protected MCEPrefs getPrefsHelper() {
+        return ((MCEActivity) getActivity()).getPrefsHelper();
     }
 }

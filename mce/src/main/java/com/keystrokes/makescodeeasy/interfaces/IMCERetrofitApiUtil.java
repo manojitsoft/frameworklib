@@ -6,7 +6,7 @@ import java.util.List;
  * Created by mmathiarasan on 17-04-2018.
  */
 
-public interface IMCEApi {
+public interface IMCERetrofitApiUtil {
 
     public List<Class> loadApiClasses();
 

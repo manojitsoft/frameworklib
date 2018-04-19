@@ -1,10 +1,14 @@
 package com.keystrokes.makescodeeasy.core;
 
 import android.app.Application;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 import com.crashlytics.android.Crashlytics;
-import com.keystrokes.makescodeeasy.api.base.MCEApiClient;
-import com.keystrokes.makescodeeasy.api.utils.IMCEBaseApi;
+import com.keystrokes.makescodeeasy.api.base.MCERetrofitApiClient;
+import com.keystrokes.makescodeeasy.api.utils.IMCERetrofitBaseApi;
+import com.keystrokes.makescodeeasy.prefs.MCEPrefs;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -20,9 +24,26 @@ public abstract class MCEApp extends Application {
         Fabric.with(this, new Crashlytics());
     }
 
-    public <T extends IMCEBaseApi> T getMCEApi(Class<T> clazz) {
-        return MCEApiClient.newInstance(getApplicationContext(), loadBaseUrl()).createService(clazz);
+    public <T extends IMCERetrofitBaseApi> T getMCERetrofitApi(Class<T> clazz) {
+        return MCERetrofitApiClient.newInstance(getApplicationContext(), loadBaseUrl()).createService(clazz);
     }
 
-    protected abstract int loadBaseUrl();
+    public abstract int loadBaseUrl();
+
+    public abstract String loadPrefsName();
+
+    public MCEPrefs getPrefsHelper() {
+        return MCEPrefs.getInstance(getApplicationContext(), loadPrefsName());
+    }
+
+    public static boolean isNetworkConnected(Context context) {
+        try {
+            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo netInfo = cm.getActiveNetworkInfo();
+            return netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
