@@ -12,18 +12,15 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 
 
-import com.keystrokes.makescodeeasy.api.utils.IMCERetrofitBaseApi;
-import com.keystrokes.makescodeeasy.interfaces.IMCERetrofitApiUtil;
+import com.keystrokes.makescodeeasy.api.volley.MCEVolleyClient;
 import com.keystrokes.makescodeeasy.prefs.MCEPrefs;
 
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by mmathiarasan on 11-04-2018.
  */
 
-public abstract class MCEActivity extends AppCompatActivity implements IMCERetrofitApiUtil {
+public abstract class MCEActivity extends AppCompatActivity implements MCEVolleyClient.MCERestListener {
 
     protected abstract int getLayoutRes();
 
@@ -47,8 +44,6 @@ public abstract class MCEActivity extends AppCompatActivity implements IMCERetro
 
     private ProgressBar progressBar;
     private  View view;
-
-    private Map<Class<?>, IMCERetrofitBaseApi> API_MAP = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

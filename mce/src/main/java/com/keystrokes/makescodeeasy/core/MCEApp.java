@@ -6,8 +6,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import com.crashlytics.android.Crashlytics;
-import com.keystrokes.makescodeeasy.api.base.MCERetrofitApiClient;
-import com.keystrokes.makescodeeasy.api.utils.IMCERetrofitBaseApi;
 import com.keystrokes.makescodeeasy.prefs.MCEPrefs;
 
 import io.fabric.sdk.android.Fabric;

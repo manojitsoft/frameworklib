@@ -34,7 +34,7 @@ public abstract class MCEVolleyClient<T> implements Response.Listener<String>, R
         GET, PUT, POST, DELETE
     }
 
-    private SportzRestListener listener;
+    private MCERestListener listener;
 
     private MCEPrefs prefs = null;
 
@@ -57,7 +57,7 @@ public abstract class MCEVolleyClient<T> implements Response.Listener<String>, R
     public abstract String url();
 
     public MCEVolleyClient(Context ctx, Object object) {
-        this.listener = (SportzRestListener) object;
+        this.listener = (MCERestListener) object;
         this.activity = object instanceof MCEActivity ? ((MCEActivity)object) :
                 ((MCEActivity)((MCEFragment)object).getActivity());
         if (object instanceof MCEActivity) {
@@ -114,7 +114,7 @@ public abstract class MCEVolleyClient<T> implements Response.Listener<String>, R
         }
     }
 
-    public interface SportzRestListener {
+    public interface MCERestListener {
         public void onSuccess(String response, MCEVolleyClient client);
 
         public void onFailure(String errorMessage, MCEVolleyClient client);

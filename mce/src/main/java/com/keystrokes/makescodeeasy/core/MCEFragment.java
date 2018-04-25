@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.keystrokes.makescodeeasy.interfaces.IMCERetrofitApiUtil;
+import com.keystrokes.makescodeeasy.api.volley.MCEVolleyClient;
 import com.keystrokes.makescodeeasy.prefs.MCEPrefs;
 
 
@@ -14,7 +14,7 @@ import com.keystrokes.makescodeeasy.prefs.MCEPrefs;
  * Created by mmathiarasan on 11-04-2018.
  */
 
-public abstract class MCEFragment extends AppCompatDialogFragment implements IMCERetrofitApiUtil {
+public abstract class MCEFragment extends AppCompatDialogFragment implements MCEVolleyClient.MCERestListener {
 
     protected abstract int getLayoutRes();
     protected abstract View initUI(View view);
