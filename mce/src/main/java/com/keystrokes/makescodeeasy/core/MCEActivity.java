@@ -55,7 +55,7 @@ public abstract class MCEActivity extends AppCompatActivity implements MCEVolley
 
         }
         getSupportActionBar().setDisplayShowTitleEnabled(true);
-        if ( null != title() ) getSupportActionBar().setTitle(Html.fromHtml("<font color='#ffffff'>"+title()+"</font>"));
+        if ( null != title() ) getSupportActionBar().setTitle(title());
         if (isHideActionbar()) {
             getSupportActionBar().hide();
         }
