@@ -58,7 +58,8 @@ public abstract class MCEVolleyClient<T> implements Response.Listener<String>, R
 
     public MCEVolleyClient(Context ctx, Object object) {
         this.listener = (SportzRestListener) object;
-        this.activity = ((MCEActivity)object);
+        this.activity = object instanceof MCEActivity ? ((MCEActivity)object) :
+                ((MCEActivity)((MCEFragment)object).getActivity());
         if (object instanceof MCEActivity) {
             this.prefs = ((MCEActivity)object).getPrefsHelper();
         } else {

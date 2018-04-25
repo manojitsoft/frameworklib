@@ -33,11 +33,17 @@ public abstract class MCEActivity extends AppCompatActivity implements IMCERetro
 
     protected abstract void initListeners(View view);
 
-    protected abstract boolean isFullScreen();
+    protected boolean isFullScreen() {
+        return false;
+    };
 
-    protected abstract boolean isHideActionbar();
+    protected boolean isHideActionbar(){
+        return false;
+    };
 
-    protected abstract boolean displayHomeEnabled();
+    protected boolean displayHomeEnabled(){
+        return false;
+    };
 
     private ProgressBar progressBar;
     private  View view;
@@ -64,7 +70,6 @@ public abstract class MCEActivity extends AppCompatActivity implements IMCERetro
         view = getLayoutInflater().inflate(getLayoutRes(), null);
         progressBar = new ProgressBar(this);
         initListeners(initUI(view));
-        loadApiMap();
     }
 
     @Override
@@ -78,7 +83,9 @@ public abstract class MCEActivity extends AppCompatActivity implements IMCERetro
         progressBar.setVisibility(View.VISIBLE);
     }
 
-    public abstract String loadingMessage();
+    public String loadingMessage(){
+        return "Loading...";
+    };
 
     public void hideProgress() {
         progressBar.setVisibility(View.GONE);
@@ -105,25 +112,6 @@ public abstract class MCEActivity extends AppCompatActivity implements IMCERetro
     public void snackIt(String message, int duration) {
         Snackbar snakeBar = Snackbar.make(view , message, duration);
         snakeBar.show();
-    }
-
-    public void loadApiMap() {
-        MCEApp app = (MCEApp) getApplication();
-        if (loadApiClasses() != null &&
-                loadApiClasses().size() > 0) {
-            for (int i = 0; i < loadApiClasses().size(); i++) {
-                API_MAP.put(loadApiClasses().get(i), app.getMCERetrofitApi(loadApiClasses().get(i)));
-            }
-        }
-    }
-
-    @Override
-    public <T> T getApi(Class<T> clazz) {
-        if (API_MAP != null &&
-                API_MAP.containsKey(clazz)) {
-            return (T) API_MAP.get(clazz);
-        }
-        return null;
     }
 
     public MCEPrefs getPrefsHelper() {

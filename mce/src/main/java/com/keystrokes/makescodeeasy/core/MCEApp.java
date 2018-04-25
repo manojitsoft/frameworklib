@@ -24,10 +24,6 @@ public abstract class MCEApp extends Application {
         Fabric.with(this, new Crashlytics());
     }
 
-    public <T extends IMCERetrofitBaseApi> T getMCERetrofitApi(Class<T> clazz) {
-        return MCERetrofitApiClient.newInstance(getApplicationContext(), loadBaseUrl()).createService(clazz);
-    }
-
     public abstract int loadBaseUrl();
 
     public abstract String loadPrefsName();

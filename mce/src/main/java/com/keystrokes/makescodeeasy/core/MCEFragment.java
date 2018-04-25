@@ -33,12 +33,6 @@ public abstract class MCEFragment extends AppCompatDialogFragment implements IMC
         return rootView;
     }
 
-    @Override
-    public <T> T getApi(Class<T> clazz) {
-        MCEActivity activity = (MCEActivity) getActivity();
-        return activity.getApi(clazz);
-    }
-
     protected MCEPrefs getPrefsHelper() {
         return ((MCEActivity) getActivity()).getPrefsHelper();
     }
