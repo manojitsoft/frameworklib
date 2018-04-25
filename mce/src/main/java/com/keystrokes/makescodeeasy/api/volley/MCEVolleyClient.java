@@ -27,7 +27,7 @@ import java.util.Map;
 
 public abstract class MCEVolleyClient<T> implements Response.Listener<String>, Response.ErrorListener {
 
-    private static final String TAG = "SportzRestClient";
+    private static final String TAG = "MCEVolleyClient";
     protected ObjectMapper mapper = new ObjectMapper();
 
     public enum MCEVolleyRequestType {
@@ -38,7 +38,7 @@ public abstract class MCEVolleyClient<T> implements Response.Listener<String>, R
 
     private MCEPrefs prefs = null;
 
-    private StringRequest sportzRequest = null;
+    private StringRequest mceRequest = null;
 
     private Context mCtx;
 
@@ -46,13 +46,13 @@ public abstract class MCEVolleyClient<T> implements Response.Listener<String>, R
 
     private Object object;
 
-    protected String[] pathVariables() {
-        return new String[]{};
+    protected boolean requireLoader() {
+        return false;
     }
 
     public abstract MCEVolleyRequestType requestType();
 
-    public abstract T jsonBody() throws JsonProcessingException;
+    public T requestBody;
 
     public abstract String url();
 
@@ -70,6 +70,11 @@ public abstract class MCEVolleyClient<T> implements Response.Listener<String>, R
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
+    public MCEVolleyClient(Context ctx, Object object, T requestBody) {
+        this(ctx, object);
+        this.requestBody = requestBody;
+    }
+
     private int getRequestMethod() {
         switch (requestType()) {
             case GET:
@@ -85,6 +90,8 @@ public abstract class MCEVolleyClient<T> implements Response.Listener<String>, R
         }
     }
 
+    public abstract <E> Class<E> responseClazz();
+
     @Override
     public void onResponse(String response) {
         try {
@@ -92,7 +99,9 @@ public abstract class MCEVolleyClient<T> implements Response.Listener<String>, R
                 ((MCEActivity) this.object).hideProgress();
             else if (this.object instanceof MCEFragment)
                 ((MCEActivity) ((MCEFragment) this.object).getActivity()).hideProgress();
-            this.listener.onSuccess(response, this);
+
+            Object obj = mapper.readValue(response.getBytes(), responseClazz());
+            this.listener.onSuccess(obj, this);
             Log.d(TAG, "onSuccess: " + response);
 
         } catch (Exception e) {
@@ -103,9 +112,9 @@ public abstract class MCEVolleyClient<T> implements Response.Listener<String>, R
     @Override
     public void onErrorResponse(VolleyError error) {
         try {
-            if (this.object instanceof MCEActivity)
+            if (this.object instanceof MCEActivity && requireLoader())
                 ((MCEActivity) this.object).hideProgress();
-            else if (this.object instanceof MCEFragment)
+            else if (this.object instanceof MCEFragment && requireLoader())
                 ((MCEActivity) ((MCEFragment) this.object).getActivity()).hideProgress();
             this.listener.onFailure(error.getLocalizedMessage(), this);
             Log.d(TAG, "onFailure: "+error.getLocalizedMessage());
@@ -115,7 +124,7 @@ public abstract class MCEVolleyClient<T> implements Response.Listener<String>, R
     }
 
     public interface MCERestListener {
-        public void onSuccess(String response, MCEVolleyClient client);
+        public void onSuccess(Object response, MCEVolleyClient client);
 
         public void onFailure(String errorMessage, MCEVolleyClient client);
     }
@@ -132,7 +141,7 @@ public abstract class MCEVolleyClient<T> implements Response.Listener<String>, R
             }
             return;
         }
-        sportzRequest = new StringRequest(getRequestMethod(), ((MCEApp)this.activity.getApplication()).loadBaseUrl() + url(), this, this) {
+        mceRequest = new StringRequest(getRequestMethod(), ((MCEApp)this.activity.getApplication()).loadBaseUrl() + url(), this, this) {
 
             @Override
             public Map<String, String> getHeaders() {
@@ -147,15 +156,15 @@ public abstract class MCEVolleyClient<T> implements Response.Listener<String>, R
             @Override
             public byte[] getBody() {
                 try {
-                    return jsonBody() == null ? null : mapper.writeValueAsBytes(getBody());
+                    return requestBody == null ? null : mapper.writeValueAsBytes(requestBody);
                 } catch (JsonProcessingException e) {
                     return null;
                 }
             }
         };
-        Volley.newRequestQueue(mCtx).add(sportzRequest);
-        if (this.object instanceof MCEActivity) ((MCEActivity) this.object).showProgress();
-        else if (this.object instanceof MCEFragment)
+        Volley.newRequestQueue(mCtx).add(mceRequest);
+        if (this.object instanceof MCEActivity && requireLoader()) ((MCEActivity) this.object).showProgress();
+        else if (this.object instanceof MCEFragment && requireLoader())
             ((MCEActivity) ((MCEFragment) this.object).getActivity()).showProgress();
     }
 }

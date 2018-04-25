@@ -111,7 +111,7 @@ public abstract class MCEActivity extends AppCompatActivity implements MCEVolley
         snakeBar.show();
     }
 
-    protected MCEPrefs getPrefsHelper() {
+    public MCEPrefs getPrefsHelper() {
         return ((MCEApp) getApplication()).getPrefsHelper();
     }
 }
