@@ -3,6 +3,7 @@ package com.keystrokes.makescodeeasy.core;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -54,6 +55,7 @@ public abstract class MCEActivity extends AppCompatActivity implements MCEVolley
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         }
+        if (getToolBar() != null) setSupportActionBar(getToolBar());
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         if ( null != title() ) getSupportActionBar().setTitle(title());
         if (isHideActionbar()) {
@@ -61,6 +63,7 @@ public abstract class MCEActivity extends AppCompatActivity implements MCEVolley
         }
         if (displayHomeEnabled()) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
         view = getLayoutInflater().inflate(getLayoutRes(), null);
         progressBar = new ProgressBar(this);
@@ -100,6 +103,10 @@ public abstract class MCEActivity extends AppCompatActivity implements MCEVolley
     protected String title() {
         return null;
     };
+
+    protected Toolbar getToolBar() {
+        return null;
+    }
 
     protected void snackIt(String message) {
         Snackbar snakeBar = Snackbar.make(view , message, 2000);
