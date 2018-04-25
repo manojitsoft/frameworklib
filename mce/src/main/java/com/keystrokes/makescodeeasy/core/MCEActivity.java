@@ -78,7 +78,7 @@ public abstract class MCEActivity extends AppCompatActivity implements MCEVolley
         progressBar.setVisibility(View.VISIBLE);
     }
 
-    public String loadingMessage(){
+    protected String loadingMessage(){
         return "Loading...";
     };
 
@@ -97,19 +97,21 @@ public abstract class MCEActivity extends AppCompatActivity implements MCEVolley
         }
     }
 
-    public abstract String title();
+    protected String title() {
+        return null;
+    };
 
-    public void snackIt(String message) {
+    protected void snackIt(String message) {
         Snackbar snakeBar = Snackbar.make(view , message, 2000);
         snakeBar.show();
     }
 
-    public void snackIt(String message, int duration) {
+    protected void snackIt(String message, int duration) {
         Snackbar snakeBar = Snackbar.make(view , message, duration);
         snakeBar.show();
     }
 
-    public MCEPrefs getPrefsHelper() {
+    protected MCEPrefs getPrefsHelper() {
         return ((MCEApp) getApplication()).getPrefsHelper();
     }
 }
